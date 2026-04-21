@@ -3,7 +3,7 @@
 // ============================================================
 async function syncWithHardware(data) {
     try {
-        await fetch('http://localhost:3001/api/data', {
+        await fetch('https://smartdesk-backend-lovat.vercel.app/api/data', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
