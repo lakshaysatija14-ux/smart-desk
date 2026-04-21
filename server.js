@@ -116,7 +116,7 @@ function syncCalendar() {
         msgList.scrollTop = msgList.scrollHeight;
 
         setTimeout(() => {
-            msgList.appendChild(createMsgItem('Desk', 'av-desk', 'Message received', getTimeStr(), true));
+            // msgList.appendChild(createMsgItem('Desk', 'av-desk', 'Message received', getTimeStr(), true));
             msgList.scrollTop = msgList.scrollHeight;
         }, 600);
 
