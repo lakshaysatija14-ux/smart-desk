@@ -418,11 +418,18 @@ function syncCalendar() {
     // ============================================================
     //  7. QUOTE / INSPIRATION  ─ refresh button cycles quotes
     // ============================================================
-    async function fetchQuote() {
+    // elements
+const quoteEl = document.querySelector('.quote');
+const authorEl = document.querySelector('.author');
+const refreshBtn = document.querySelector('.refresh-btn');
+
+// function
+async function fetchQuote() {
     try {
         const res = await fetch("https://api.quotable.io/random");
         const data = await res.json();
 
+        // fade out
         quoteEl.style.opacity = "0";
         authorEl.style.opacity = "0";
 
@@ -430,12 +437,15 @@ function syncCalendar() {
             quoteEl.textContent = `"${data.content}"`;
             authorEl.textContent = `— ${data.author}`;
 
+            // fade in
             quoteEl.style.opacity = "1";
             authorEl.style.opacity = "1";
 
+            // optional hardware sync
             syncWithHardware({
                 quotes: `${data.content} — ${data.author}`
             });
+
         }, 300);
 
     } catch (err) {
@@ -443,7 +453,7 @@ function syncCalendar() {
     }
 }
 
-// ✅ YE FUNCTION KE BAHAR HOGA
+// button click
 refreshBtn.addEventListener('click', fetchQuote);
 
     // ============================================================
