@@ -142,7 +142,7 @@ function syncCalendar() {
     //  3. WEATHER SYSTEM  (OpenWeatherMap API)
     // ============================================================
     let weatherApiKey = '8669018300070c64718b01069c69bee7';
-    let currentCity   = 'Delhi';
+    let currentCity = 'Rajpura';
 
     const wBadge  = document.querySelector('.w-badge');
     const tempEl  = document.querySelector('.temp');
@@ -509,6 +509,6 @@ refreshBtn.addEventListener('click', fetchQuote);
         );
     });
     // ✅ AUTO WEATHER LOAD
-    fetchWeather('Delhi');
+    fetchWeather('Rajpura');
     // ✅ AUTO QUOTE LOAD
     fetchQuote();
