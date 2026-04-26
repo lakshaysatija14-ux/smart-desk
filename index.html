@@ -446,6 +446,43 @@
         </div>
 
     </div>
-    <script src="server.js"></script>
+    </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const quoteEl = document.querySelector(".quote");
+  const authorEl = document.querySelector(".author");
+  const refreshBtn = document.querySelector(".refresh-btn");
+
+  async function fetchQuote() {
+    try {
+      const res = await fetch("https://api.api-ninjas.com/v1/quotes", {
+        headers: {
+          "X-Api-Key": "HjkBfzqgzWK5KYYTE1E5lFqcTSp68Xrom3I0gBD9"
+        }
+      });
+
+      const data = await res.json();
+
+      quoteEl.innerText = `"${data[0].quote}"`;
+      authorEl.innerText = `— ${data[0].author}`;
+
+    } catch (err) {
+      console.log("Error:", err);
+    }
+  }
+
+  fetchQuote();
+
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", fetchQuote);
+  }
+
+});
+</script>
+
+</body>
+</html>
 </body>
 </html>
