@@ -426,7 +426,7 @@ const refreshBtn = document.querySelector('.refresh-btn');
 // function
 async function fetchQuote() {
     try {
-        const res = await fetch("https://zenquotes.io/api/random");
+        const res  = await fetch("https://dummyjson.com/quotes/random");
         const data = await res.json();
 
         // fade out
@@ -434,18 +434,14 @@ async function fetchQuote() {
         authorEl.style.opacity = "0";
 
         setTimeout(() => {
-            quoteEl.textContent = `"${data[0].q}"`;
-            authorEl.textContent = `— ${data[0].a}`;
+            quoteEl.textContent  = `"${data.quote}"`;
+            authorEl.textContent = `— ${data.author}`;
 
             // fade in
             quoteEl.style.opacity = "1";
             authorEl.style.opacity = "1";
 
-            // optional hardware sync
-            syncWithHardware({
-    quotes: `${data[0].q} — ${data[0].a}`
-});
-
+            syncWithHardware({ quotes: `${data.quote} — ${data.author}` });
         }, 300);
 
     } catch (err) {
