@@ -90,23 +90,22 @@ function syncCalendar() {
     const sendBtn   = document.querySelector('.btn-send');
     const msgList   = document.getElementById('msgList');
 
- function createMsgItem(text) {
+ function createMsgItem(text, time) {
     const div = document.createElement('div');
     div.className = 'msg-item';
-
     div.innerHTML = `
         <div class="clean-msg">
-            ${text}
+            <span class="msg-body">${text}</span>
+            <div style="font-size:11px; opacity:0.7; margin-top:4px;">${time}</div>
         </div>
     `;
-
     return div;
 }
 function sendDeskMessage() {
     const text = sendInput.value.trim();
     if (!text) return;
-
-    msgList.appendChild(createMsgItem(text));
+    const time = getTimeStr();
+    msgList.appendChild(createMsgItem(text, time));
     msgList.scrollTop = msgList.scrollHeight;
     sendInput.value = '';
 }
