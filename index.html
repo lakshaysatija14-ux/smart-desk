@@ -434,52 +434,6 @@
 
     </div>
     <script src="server.js"></script>
-    <script>
-  // ── Message Section ──────────────────────────────
-  const sendInput  = document.querySelector('.input-desk');
-  const sendBtn    = document.querySelector('.btn-send');
-  const msgList    = document.getElementById('msgList');
-  const clearBtn   = document.getElementById('clearMessages');
 
-  function getTimeStr() {
-    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  }
-
-  function createMsgItem(text) {
-    const div = document.createElement('div');
-    div.className = 'msg-item';
-    div.innerHTML = `
-      <div class="msg-avatar av-you">You</div>
-      <div class="msg-content">
-        <div class="msg-head">
-          <span class="msg-name">You</span>
-          <span class="msg-time">${getTimeStr()}</span>
-        </div>
-        <div class="msg-text">${text}</div>
-      </div>
-    `;
-    return div;
-  }
-
-  function sendDeskMessage() {
-    const text = sendInput.value.trim();
-    if (!text) return;
-
-    msgList.appendChild(createMsgItem(text));
-    msgList.scrollTop = msgList.scrollHeight;
-    sendInput.value = '';
-  }
-
-  sendBtn.addEventListener('click', sendDeskMessage);
-
-  sendInput.addEventListener('keypress', e => {
-    if (e.key === 'Enter') sendDeskMessage();
-  });
-
-  clearBtn.addEventListener('click', () => {
-    msgList.innerHTML = '';
-  });
-  // ─────────────────────────────────────────────────
-</script>
 </body>
 </html>
