@@ -78,10 +78,13 @@
       .inspire-card { background: linear-gradient(145deg, rgba(60, 30, 80, 0.9), rgba(26, 27, 40, 0.9)); border-top: 1px solid rgba(139, 92, 246, 0.3); justify-content: center; text-align: center; position: relative; }
       .inspire-card .card-title i { color: var(--orange); }
       .badge { background: rgba(34, 197, 94, 0.2); color: var(--green); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; border: 1px solid rgba(34, 197, 94, 0.4); }
-      .quote { font-size: 1.1rem; font-weight: 500; line-height: 1.5; margin: 15px 0 10px; transition: opacity 0.4s ease; }
-      .author { color: var(--text-muted); font-size: 0.9rem; transition: opacity 0.4s ease; }
-      .refresh-btn { position: absolute; bottom: 20px; right: 20px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: none; color: white; cursor: pointer; transition: transform 0.3s; }
+      .quote { font-size: 1.05rem; font-weight: 500; line-height: 1.6; margin: 15px 0 10px; transition: opacity 0.35s ease; }
+      .author { color: var(--text-muted); font-size: 0.88rem; transition: opacity 0.35s ease; }
+      .refresh-btn { position: absolute; bottom: 20px; right: 20px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); border: none; color: white; cursor: pointer; transition: transform 0.4s; }
       .refresh-btn:hover { transform: rotate(180deg); background: rgba(255,255,255,0.18); }
+      .quote-spinner { display: flex; justify-content: center; align-items: center; height: 60px; }
+      .quote-spinner::after { content:''; width:22px; height:22px; border-radius:50%; border:2px solid rgba(139,92,246,0.2); border-top-color:#8b5cf6; animation:spin360 0.7s linear infinite; }
+      @keyframes spin360 { to { transform: rotate(360deg); } }
 
       /* Weather Card */
       .weather-card { background: linear-gradient(145deg, rgba(30, 50, 90, 0.9), rgba(26, 27, 40, 0.9)); border-top: 1px solid rgba(59, 130, 246, 0.3); }
@@ -93,18 +96,32 @@
       .w-icon i { font-size: 2.5rem; color: #facc15; }
       .w-desc { font-size: 0.9rem; color: var(--text-muted); }
       .w-stats { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); background: rgba(0, 0, 0, 0.2); padding: 10px; border-radius: 10px; margin-top: auto; }
+      .w-loading { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.85rem; }
+      .w-loading-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); animation: wPulse 1.2s ease-in-out infinite; }
+      .w-loading-dot:nth-child(2) { animation-delay: 0.2s; }
+      .w-loading-dot:nth-child(3) { animation-delay: 0.4s; }
+      @keyframes wPulse { 0%,100%{opacity:0.2;transform:scale(0.8)} 50%{opacity:1;transform:scale(1)} }
 
       /* Alarm Card */
       .alarm-card { background: linear-gradient(145deg, rgba(90, 30, 40, 0.9), rgba(26, 27, 40, 0.9)); border-top: 1px solid rgba(236, 72, 153, 0.3); }
       .alarm-card .card-title i { color: var(--pink); }
       .time-picker { display: flex; gap: 10px; align-items: center; margin: 15px 0; }
-      .t-box { background: rgba(0, 0, 0, 0.3); padding: 15px 20px; border-radius: 12px; font-size: 1.5rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); min-width: 60px; text-align: center; cursor: text; outline: none; }
+      .t-box { background: rgba(0, 0, 0, 0.3); padding: 15px 20px; border-radius: 12px; font-size: 1.5rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); min-width: 60px; text-align: center; cursor: text; outline: none; user-select: text; }
       .t-box:focus { border-color: rgba(236, 72, 153, 0.5); box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.15); }
-      .am-pm { background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 12px; font-size: 1rem; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; user-select: none; }
-      .toggle-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; }
-      .btn-alarm { width: 100%; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(90deg, #f43f5e, #fb923c); color: white; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; }
+      .am-pm { background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 12px; font-size: 1rem; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; user-select: none; transition: all 0.2s; min-width: 72px; text-align: center; }
+      .am-pm:hover { background: rgba(236,72,153,0.15); border-color: rgba(236,72,153,0.4); }
+      .alarm-status-bar { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; padding: 8px 12px; background: rgba(0,0,0,0.2); border-radius: 8px; display: flex; align-items: center; gap: 7px; }
+      .alarm-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); flex-shrink: 0; }
+      .alarm-status-dot.active { background: var(--green); animation: wPulse 1s infinite; }
+      .alarm-status-dot.ringing { background: #ef4444; animation: wPulse 0.4s infinite; }
+      .btn-alarm { width: 100%; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(90deg, #f43f5e, #fb923c); color: white; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: all 0.3s; }
+      .btn-alarm:hover { opacity: 0.9; transform: scale(1.01); }
+      .btn-stop-alarm { width: 100%; padding: 12px; border-radius: 12px; border: none; background: linear-gradient(90deg, #374151, #4b5563); color: #f3f4f6; font-weight: 600; cursor: pointer; display: none; justify-content: center; align-items: center; gap: 8px; margin-top: 10px; transition: all 0.2s; }
+      .btn-stop-alarm:hover { background: linear-gradient(90deg, #ef4444, #dc2626); }
+      @keyframes alarmRing { 0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.5)} 50%{box-shadow:0 0 0 12px rgba(239,68,68,0)} }
+      .alarm-ringing { animation: alarmRing 0.5s infinite !important; background: linear-gradient(90deg,#ef4444,#dc2626) !important; }
 
-      /* ═══════════ CALENDAR (NEW) ═══════════ */
+      /* ═══════════ CALENDAR ═══════════ */
       .cal-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--card-border); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: transform 0.3s; }
       .cal-card:hover { transform: translateY(-3px); }
       .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
@@ -232,10 +249,6 @@
       /* Footer */
       .footer { text-align: center; font-size: 0.8rem; color: var(--text-muted); padding: 20px 0; margin-top: 10px; }
 
-      /* Alarm ringing animation */
-      @keyframes alarmPulse { 0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,0.4)} 50%{box-shadow:0 0 0 15px rgba(244,63,94,0)} }
-      .alarm-ringing .btn-alarm { animation: alarmPulse 0.6s infinite; }
-
       /* Responsive */
       @media (max-width: 1200px) { .row-1,.row-2 { grid-template-columns: 1fr 1fr; } }
       @media (max-width: 768px)  { .row-1,.row-2 { grid-template-columns: 1fr; } .nav-menu { display: none; } }
@@ -298,6 +311,7 @@
 
       <!-- ===== ROW 1 — 4 Cards ===== -->
       <div class="row-1">
+
         <!-- Send Card -->
         <div class="card send-card">
           <div class="card-header">
@@ -310,66 +324,87 @@
           </button>
         </div>
 
-        <!-- Inspiration Card -->
+        <!-- ── FIX 1: Inspiration Card — quote loads from API fresh every time ── -->
         <div class="card inspire-card">
           <div class="card-header" style="justify-content: flex-start; gap: 10px; margin-bottom: 0">
             <div class="card-title"><i class="fa-solid fa-quote-left"></i> Daily Inspiration</div>
             <span class="badge">• LIVE SYNC</span>
           </div>
-          <div class="quote" id="quoteText">"The secret of getting ahead is getting started."</div>
-          <div class="author" id="quoteAuthor">— Mark Twain</div>
+          <!-- No hardcoded quote — JS fills this after API call -->
+          <div class="quote" id="quoteText">
+            <div class="quote-spinner"></div>
+          </div>
+          <div class="author" id="quoteAuthor"></div>
           <button class="refresh-btn" onclick="refreshQuote()" title="Next quote">
             <i class="fa-solid fa-arrows-rotate"></i>
           </button>
         </div>
 
-        <!-- Weather Card -->
+        <!-- ── FIX 2: Weather Card — live API data, IDs for JS to update ── -->
         <div class="card weather-card">
           <div class="card-header">
             <div class="card-title"><i class="fa-solid fa-cloud-sun"></i> Desk Weather</div>
-            <span class="w-badge">Delhi, India</span>
+            <span class="w-badge" id="w-location-badge">Rajpura, India</span>
           </div>
           <div class="temp-row">
-            <div class="temp">32°C</div>
+            <div class="temp" id="w-temp">--°</div>
             <div style="text-align: center">
-              <div class="w-icon"><i class="fa-solid fa-sun"></i></div>
-              <div class="w-desc">Sunny</div>
+              <div class="w-icon"><i id="w-icon-el" class="fa-solid fa-cloud"></i></div>
+              <div class="w-desc" id="w-desc">
+                <div class="w-loading">
+                  <div class="w-loading-dot"></div>
+                  <div class="w-loading-dot"></div>
+                  <div class="w-loading-dot"></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="w-stats">
-            <span>Humidity <b>40%</b></span> | <span>Wind <b>12 km/h</b></span> | <span>Feels <b>34°</b></span>
+            <span>Humidity <b id="w-hum">--%</b></span>
+            <span>|</span>
+            <span>Wind <b id="w-wind">-- km/h</b></span>
+            <span>|</span>
+            <span>Feels <b id="w-feels">--°</b></span>
           </div>
         </div>
 
-        <!-- Alarm Card -->
-        <div class="card alarm-card">
+        <!-- ── FIX 3: Alarm Card — proper AM/PM, no "once" row, stop alarm button ── -->
+        <div class="card alarm-card" id="alarmCard">
           <div class="card-header">
             <div class="card-title"><i class="fa-regular fa-bell"></i> Set Alarm</div>
           </div>
           <div class="time-picker">
-            <div class="t-box" id="alarmHour" contenteditable="true">00</div>
-            <span style="font-size: 1.5rem; font-weight: bold">:</span>
-            <div class="t-box" id="alarmMin" contenteditable="true">00</div>
-            <div class="am-pm" id="alarmAmPm">
-              PM <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem; margin-left: 5px"></i>
+            <div class="t-box" id="alarmHour" contenteditable="true"
+                 oninput="enforceTimeInput(this,12)"
+                 onblur="padBox(this,12)"
+                 onkeydown="handleTimeKey(event,this,'alarmMin')">12</div>
+            <span style="font-size: 1.5rem; font-weight: bold; color: var(--text-muted)">:</span>
+            <div class="t-box" id="alarmMin" contenteditable="true"
+                 oninput="enforceTimeInput(this,59)"
+                 onblur="padBox(this,59)"
+                 onkeydown="handleTimeKey(event,this,null)">00</div>
+            <div class="am-pm" id="alarmAmPm" onclick="toggleAmPm()">
+              AM <i class="fa-solid fa-chevron-up" style="font-size:0.75rem;margin-left:4px"></i>
             </div>
           </div>
-          <div class="toggle-row">
-            <span>Repeat</span>
-            <span style="display: flex; align-items: center; gap: 8px">
-              <i class="fa-solid fa-toggle-off" style="font-size: 1.2rem; color: var(--text-muted)"></i> Once
-            </span>
+          <div class="alarm-status-bar">
+            <div class="alarm-status-dot" id="alarmDot"></div>
+            <span id="alarmStatusText">No alarm set</span>
           </div>
-          <button class="btn-alarm">
+          <button class="btn-alarm" id="btnSetAlarm" onclick="setAlarm()">
             <i class="fa-regular fa-clock"></i> SET ALARM
           </button>
+          <button class="btn-stop-alarm" id="btnStopAlarm" onclick="stopAlarm()">
+            <i class="fa-solid fa-stop"></i> STOP ALARM
+          </button>
         </div>
-      </div>
-      <!-- /row-1 -->
+
+      </div><!-- /row-1 -->
 
       <!-- ===== ROW 2 ===== -->
       <div class="row-2">
-        <!-- NEW Calendar Card -->
+
+        <!-- Calendar Card -->
         <div class="cal-card">
           <div class="cal-header">
             <div class="card-title" style="font-size:1rem;font-weight:600;display:flex;align-items:center;gap:10px">
@@ -439,508 +474,860 @@
           <div class="card actions-card">
             <div class="card-title"><i class="fa-solid fa-bolt"></i> Quick Actions</div>
             <div class="action-grid">
-              <button class="action-btn" id="actionRefresh" onclick="location.reload()">
+              <button class="action-btn" onclick="location.reload()">
                 <div class="action-icon"><i class="fa-solid fa-rotate"></i></div>Refresh
               </button>
-              <button class="action-btn" id="actionSync" onclick="syncGCalNow()">
+              <button class="action-btn" onclick="syncGCalNow()">
                 <div class="action-icon"><i class="fa-solid fa-arrows-rotate"></i></div>Sync
               </button>
-              <button class="action-btn" id="actionDark" onclick="toggleDark()">
+              <button class="action-btn" onclick="toggleDark()">
                 <div class="action-icon"><i class="fa-solid fa-droplet"></i></div>Dark
               </button>
-              <button class="action-btn" id="actionHelp" onclick="showHelp()">
+              <button class="action-btn" onclick="showHelp()">
                 <div class="action-icon"><i class="fa-regular fa-circle-question"></i></div>Help
               </button>
             </div>
           </div>
         </div>
-      </div>
-      <!-- /row-2 -->
+
+      </div><!-- /row-2 -->
 
       <div class="footer">© 2026 Smart Desk — All systems live & synced 🚀</div>
     </div>
 
-    <!-- ===== BACKEND SERVER.JS (original connection kept) ===== -->
     <script src="server.js"></script>
-
     <script>
-      // ══════════════════════════════════════════
-      // ⚙️  GOOGLE CLIENT ID
-      // ══════════════════════════════════════════
-      const GOOGLE_CLIENT_ID = '1030189405592-317rd184eqf01pt008kk95ah44falr1n.apps.googleusercontent.com';
-      const GCAL_SCOPE = 'https://www.googleapis.com/auth/calendar';
-      let gToken = null, gTokenClient = null, gCache = {};
-      async function saveToBackend(type, data) {
-  try {
-    const response = await fetch('https://smartdesk-backend-lovat.vercel.app/api/data', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        type: type,
-        data: data,
-        createdAt: new Date()
-      })
-    });
-
-    const result = await response.json();
-    console.log('Saved:', result);
-
-  } catch (error) {
-    console.error('Backend Error:', error);
-  }
-}
-
-      // ── CLOCK ─────────────────────────────────
-      function tick() {
-        const n = new Date();
-        let h = n.getHours(), m = n.getMinutes();
-        const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
-        document.getElementById('clock').textContent =
-          `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${ap}`;
-        const D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
-              M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        document.getElementById('date').textContent =
-          `${D[n.getDay()]}, ${M[n.getMonth()]} ${n.getDate()}`;
+    // ═══════════════════════════════════════════════════════════
+    // 🔧 BACKEND SAVE
+    // ═══════════════════════════════════════════════════════════
+    async function saveToBackend(type, data) {
+      try {
+        const res = await fetch('https://smartdesk-backend-lovat.vercel.app/api/data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type, data, createdAt: new Date().toISOString() })
+        });
+        const result = await res.json();
+        console.log(`[Backend] ${type} saved:`, result);
+        return result;
+      } catch (err) {
+        console.error(`[Backend] ${type} failed:`, err);
+        return null;
       }
-      setInterval(tick, 1000); tick();
+    }
 
-      // ── QUOTES ────────────────────────────────
-      let usedQuotes = new Set(), isFetchingQuote = false;
-      async function refreshQuote() {
-        if (isFetchingQuote) return;
-        isFetchingQuote = true;
-        const qt = document.getElementById('quoteText');
-        const qa = document.getElementById('quoteAuthor');
-        qt.style.opacity = '0'; qa.style.opacity = '0';
-        try {
-          const res = await fetch('https://type.fit/api/quotes');
-          const data = await res.json();
-          let q;
-          do { q = data[Math.floor(Math.random() * data.length)]; } while (usedQuotes.has(q.text));
-          usedQuotes.add(q.text);
-          if (usedQuotes.size > 1000) usedQuotes.clear();
-          setTimeout(() => {
-            qt.textContent = `"${q.text}"`; qa.textContent = `— ${q.author || 'Unknown'}`;
-            qt.style.opacity = '1'; qa.style.opacity = '1'; isFetchingQuote = false;
-          }, 300);
-        } catch {
-          setTimeout(() => {
-            qt.textContent = '"Stay positive, work hard, make it happen."';
-            qa.textContent = '— Unknown'; qt.style.opacity = '1'; qa.style.opacity = '1'; isFetchingQuote = false;
-          }, 300);
-        }
+    // ═══════════════════════════════════════════════════════════
+    // ⏰ CLOCK
+    // ═══════════════════════════════════════════════════════════
+    function tick() {
+      const n = new Date();
+      let h = n.getHours(), m = n.getMinutes();
+      const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+      document.getElementById('clock').textContent =
+        `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${ap}`;
+      const D = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      document.getElementById('date').textContent =
+        `${D[n.getDay()]}, ${M[n.getMonth()]} ${n.getDate()}`;
+    }
+    setInterval(tick, 1000); tick();
+
+    // ═══════════════════════════════════════════════════════════
+    // 💬 FIX 1 — QUOTES: Always fresh random from API
+    // ═══════════════════════════════════════════════════════════
+    let _quotePool = [];
+    let _usedIdxSet = new Set();
+    let _quoteFetching = false;
+
+    async function _fetchQuotePool() {
+      try {
+        const res = await fetch('https://type.fit/api/quotes');
+        if (!res.ok) throw new Error('API error');
+        const data = await res.json();
+        // Filter out empty/null quotes
+        _quotePool = data.filter(q => q && q.text && q.text.trim().length > 5);
+      } catch {
+        // Minimal offline backup — only used if network fully fails
+        _quotePool = [
+          { text: 'The secret of getting ahead is getting started.', author: 'Mark Twain' },
+          { text: 'It always seems impossible until it\'s done.', author: 'Nelson Mandela' },
+          { text: 'Hard work beats talent when talent doesn\'t work hard.', author: 'Tim Notke' },
+          { text: 'Success usually comes to those who are too busy to be looking for it.', author: 'Henry David Thoreau' },
+          { text: 'Don\'t watch the clock. Do what it does. Keep going.', author: 'Sam Levenson' },
+          { text: 'The future depends on what you do today.', author: 'Mahatma Gandhi' },
+          { text: 'Believe you can and you\'re halfway there.', author: 'Theodore Roosevelt' },
+          { text: 'Act as if what you do makes a difference. It does.', author: 'William James' },
+          { text: 'Success is not final, failure is not fatal.', author: 'Winston Churchill' },
+          { text: 'Everything you\'ve ever wanted is on the other side of fear.', author: 'George Addair' }
+        ];
+      }
+    }
+
+    async function refreshQuote() {
+      if (_quoteFetching) return;
+      _quoteFetching = true;
+
+      const qt = document.getElementById('quoteText');
+      const qa = document.getElementById('quoteAuthor');
+
+      // Show spinner while loading
+      qt.style.opacity = '0';
+      qa.style.opacity = '0';
+
+      // Fetch pool if empty
+      if (_quotePool.length === 0) {
+        qt.innerHTML = '<div class="quote-spinner"></div>';
+        qt.style.opacity = '1';
+        await _fetchQuotePool();
       }
 
-      // ── FESTIVALS DB ──────────────────────────
-      const F = {
-        '01-13':[{name:'Lohri 🔥',color:'#f97316',type:'festival'}],
-        '01-14':[{name:'Makar Sankranti 🪁',color:'#facc15',type:'festival'}],
-        '01-26':[{name:'Republic Day 🇮🇳',color:'#3b82f6',type:'national'}],
-        '04-14':[{name:'Ambedkar Jayanti',color:'#3b82f6',type:'national'}],
-        '08-15':[{name:'Independence Day 🇮🇳',color:'#22c55e',type:'national'}],
-        '10-02':[{name:'Gandhi Jayanti 🕊️',color:'#22c55e',type:'national'}],
-        '12-25':[{name:'Christmas 🎄',color:'#ef4444',type:'festival'}],
-        '01-01':[{name:'New Year 🎉',color:'#8b5cf6',type:'festival'}],
-        '2025-02-26':[{name:'Maha Shivratri 🕉️',color:'#8b5cf6',type:'festival'}],
-        '2025-03-14':[{name:'Holi 🎨',color:'#ec4899',type:'festival'}],
-        '2025-03-30':[{name:'Eid ul-Fitr 🌙',color:'#6366f1',type:'festival'}],
-        '2025-04-13':[{name:'Baisakhi 🌾',color:'#22c55e',type:'festival'}],
-        '2025-10-20':[{name:'Diwali 🪔',color:'#facc15',type:'festival'}],
-        '2026-02-17':[{name:'Maha Shivratri 🕉️',color:'#8b5cf6',type:'festival'}],
-        '2026-03-03':[{name:'Holi 🎨',color:'#ec4899',type:'festival'}],
-        '2026-03-21':[{name:'Eid ul-Fitr 🌙',color:'#6366f1',type:'festival'}],
-        '2026-04-03':[{name:'Good Friday ✝️',color:'#64748b',type:'festival'}],
-        '2026-04-13':[{name:'Baisakhi 🌾',color:'#22c55e',type:'festival'}],
-        '2026-05-22':[{name:'Buddha Purnima ☸️',color:'#f59e0b',type:'festival'}],
-        '2026-05-28':[{name:'Eid ul-Adha 🌙',color:'#6366f1',type:'festival'}],
-        '2026-08-20':[{name:'Janmashtami 🪈',color:'#8b5cf6',type:'festival'}],
-        '2026-09-08':[{name:'Ganesh Chaturthi 🐘',color:'#f97316',type:'festival'}],
-        '2026-10-16':[{name:'Dussehra 🏹',color:'#ef4444',type:'festival'}],
-        '2026-11-04':[{name:'Diwali 🪔',color:'#facc15',type:'festival'}],
-        '2026-11-03':[{name:'Guru Nanak Jayanti ☬',color:'#22c55e',type:'festival'}],
-        '2027-03-22':[{name:'Holi 🎨',color:'#ec4899',type:'festival'}],
-        '2027-10-19':[{name:'Diwali 🪔',color:'#facc15',type:'festival'}],
+      // Reset tracking set if we've shown all quotes
+      if (_usedIdxSet.size >= _quotePool.length) {
+        _usedIdxSet.clear();
+      }
+
+      // Pick a random index we haven't shown yet
+      let idx;
+      let attempts = 0;
+      do {
+        idx = Math.floor(Math.random() * _quotePool.length);
+        attempts++;
+        if (attempts > _quotePool.length * 2) { _usedIdxSet.clear(); break; }
+      } while (_usedIdxSet.has(idx));
+
+      _usedIdxSet.add(idx);
+      const q = _quotePool[idx];
+
+      setTimeout(() => {
+        qt.innerHTML = ''; // clear spinner if present
+        qt.textContent = `"${q.text.trim()}"`;
+        qa.textContent = `— ${q.author && q.author.trim() ? q.author.trim() : 'Unknown'}`;
+        qt.style.opacity = '1';
+        qa.style.opacity = '1';
+        _quoteFetching = false;
+      }, 280);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // 🌤️ FIX 2 — WEATHER: Live API + wind speed to backend
+    // ═══════════════════════════════════════════════════════════
+    async function loadWeather() {
+      // Delhi coords — change lat/lon for another city
+      const lat = 28.6139, lon = 77.2090;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+        `&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m` +
+        `&wind_speed_unit=kmh&timezone=Asia%2FKolkata`;
+
+      const WMO_MAP = {
+        0:  { label: 'Clear Sky',       icon: 'fa-sun',                color: '#facc15' },
+        1:  { label: 'Mainly Clear',    icon: 'fa-sun',                color: '#facc15' },
+        2:  { label: 'Partly Cloudy',   icon: 'fa-cloud-sun',          color: '#93c5fd' },
+        3:  { label: 'Overcast',        icon: 'fa-cloud',              color: '#9ca3af' },
+        45: { label: 'Foggy',           icon: 'fa-smog',               color: '#d1d5db' },
+        48: { label: 'Icy Fog',         icon: 'fa-smog',               color: '#d1d5db' },
+        51: { label: 'Light Drizzle',   icon: 'fa-cloud-drizzle',      color: '#93c5fd' },
+        53: { label: 'Drizzle',         icon: 'fa-cloud-drizzle',      color: '#60a5fa' },
+        55: { label: 'Heavy Drizzle',   icon: 'fa-cloud-drizzle',      color: '#3b82f6' },
+        61: { label: 'Slight Rain',     icon: 'fa-cloud-rain',         color: '#60a5fa' },
+        63: { label: 'Rain',            icon: 'fa-cloud-rain',         color: '#3b82f6' },
+        65: { label: 'Heavy Rain',      icon: 'fa-cloud-showers-heavy',color: '#1d4ed8' },
+        71: { label: 'Slight Snow',     icon: 'fa-snowflake',          color: '#e0f2fe' },
+        73: { label: 'Snow',            icon: 'fa-snowflake',          color: '#bfdbfe' },
+        75: { label: 'Heavy Snow',      icon: 'fa-snowflake',          color: '#93c5fd' },
+        80: { label: 'Rain Showers',    icon: 'fa-cloud-rain',         color: '#60a5fa' },
+        81: { label: 'Rain Showers',    icon: 'fa-cloud-rain',         color: '#3b82f6' },
+        82: { label: 'Violent Showers', icon: 'fa-cloud-showers-heavy',color: '#1d4ed8' },
+        95: { label: 'Thunderstorm',    icon: 'fa-bolt',               color: '#fde047' },
+        96: { label: 'Thunderstorm',    icon: 'fa-bolt',               color: '#fde047' },
+        99: { label: 'Thunderstorm',    icon: 'fa-bolt',               color: '#fde047' }
       };
-      function getFests(y,mo,d) {
-        const mm=String(mo+1).padStart(2,'0'), dd=String(d).padStart(2,'0');
-        return [...(F[`${y}-${mm}-${dd}`]||[]),...(F[`${mm}-${dd}`]||[])];
-      }
 
-      // ── LOCAL EVENTS ──────────────────────────
-      function getLocal(){try{return JSON.parse(localStorage.getItem('sd_events')||'{}')}catch{return{}}}
-      function saveLocal(e){localStorage.setItem('sd_events',JSON.stringify(e))}
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Weather API error');
+        const d = await res.json();
+        const c = d.current;
 
-      // ── GOOGLE CALENDAR ───────────────────────
-      function initGCal() {
-        if (!GOOGLE_CLIENT_ID) return;
-        try {
-          gTokenClient = google.accounts.oauth2.initTokenClient({
-            client_id: GOOGLE_CLIENT_ID, scope: GCAL_SCOPE,
-            callback: async r => {
-              if (r.error) { setGBtn('off'); return; }
-              gToken = r.access_token;
-              localStorage.setItem('gcal_on','1');
-              saveToBackend('google-calendar', {
-  status: 'connected'
-});
-              setGBtn('on');
-              await loadGCal(); renderCal();
-              document.getElementById('modal-gcal-info').style.display = 'flex';
-            }
-          });
-          if (localStorage.getItem('gcal_on') === '1')
-            setTimeout(() => gTokenClient.requestAccessToken({prompt:''}), 1000);
-        } catch(e) { console.warn('GSI init fail', e); }
-      }
+        const wc  = WMO_MAP[c.weather_code] || { label: 'Unknown', icon: 'fa-cloud', color: '#9ca3af' };
+        const temp  = Math.round(c.temperature_2m);
+        const feels = Math.round(c.apparent_temperature);
+        const hum   = Math.round(c.relative_humidity_2m);
+        const wind  = Math.round(c.wind_speed_10m);
 
-      function setGBtn(s) {
-        const b = document.getElementById('gcal-btn'), t = document.getElementById('gcal-label');
-        b.className = 'btn-gcal';
-        if (s==='on') { b.classList.add('connected'); t.textContent='Google Synced'; }
-        else if (s==='sync') { b.classList.add('syncing'); t.textContent='Syncing...'; }
-        else { t.textContent='Connect Google'; }
-      }
+        // Update DOM
+        document.getElementById('w-temp').textContent    = `${temp}°C`;
+        document.getElementById('w-desc').textContent    = wc.label;
+        document.getElementById('w-hum').textContent     = `${hum}%`;
+        document.getElementById('w-wind').textContent    = `${wind} km/h`;
+        document.getElementById('w-feels').textContent   = `${feels}°C`;
+        const iconEl = document.getElementById('w-icon-el');
+        iconEl.className = `fa-solid ${wc.icon}`;
+        iconEl.style.color = wc.color;
 
-      async function handleGCalClick() {
-        if (!GOOGLE_CLIENT_ID) { alert('No Client ID set.'); return; }
-        if (gToken) { await syncGCalNow(); }
-        else if (gTokenClient) { gTokenClient.requestAccessToken(); }
-      }
-
-      async function syncGCalNow() {
-        if (!gToken) { alert('Connect Google Calendar first.'); return; }
-        setGBtn('sync'); await loadGCal(); renderCal();
-      }
-
-      async function loadGCal() {
-        if (!gToken) return;
-        try {
-          const tMin = new Date(calY,calM-1,1).toISOString();
-          const tMax = new Date(calY,calM+2,0,23,59,59).toISOString();
-          const r = await fetch(
-            `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${encodeURIComponent(tMin)}&timeMax=${encodeURIComponent(tMax)}&singleEvents=true&orderBy=startTime&maxResults=500`,
-            {headers:{Authorization:`Bearer ${gToken}`}}
-          );
-          if (r.status===401) { gToken=null; setGBtn('off'); localStorage.removeItem('gcal_on'); return; }
-          const d = await r.json(); gCache = {};
-          const gc={'1':'#7986cb','2':'#33b679','3':'#8e24aa','4':'#e67c73','5':'#f6bf26','6':'#f4511e','7':'#039be5','8':'#616161','9':'#3f51b5','10':'#0b8043','11':'#d50000'};
-          (d.items||[]).forEach(it => {
-            const dk = (it.start.date||it.start.dateTime||'').substring(0,10);
-            if (!dk) return;
-            if (!gCache[dk]) gCache[dk] = [];
-            gCache[dk].push({name:it.summary||'(No title)',color:gc[it.colorId]||'#4285f4',gcalId:it.id,src:'gcal'});
-          });
-          setGBtn('on');
-        } catch(e) { console.error('GCal error',e); setGBtn('on'); }
-      }
-
-      async function pushToGCal(dateKey,name) {
-        if (!gToken) return null;
-        try {
-          const r = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
-            method:'POST', headers:{Authorization:`Bearer ${gToken}`,'Content-Type':'application/json'},
-            body:JSON.stringify({summary:name,start:{date:dateKey},end:{date:dateKey}})
-          });
-          if (!r.ok) return null;
-          return (await r.json()).id;
-        } catch { return null; }
-      }
-
-      async function deleteFromGCal(gcalId) {
-        if (!gToken||!gcalId) return;
-        try {
-          await fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${gcalId}`,{
-            method:'DELETE',headers:{Authorization:`Bearer ${gToken}`}
-          });
-          Object.keys(gCache).forEach(k=>{gCache[k]=gCache[k].filter(e=>e.gcalId!==gcalId);});
-        } catch(e) { console.warn('GCal delete fail',e); }
-      }
-
-      // ── CALENDAR RENDER ───────────────────────
-      const today = new Date();
-      let calY = today.getFullYear(), calM = today.getMonth();
-
-      function renderCal() {
-        const fd = new Date(calY,calM,1).getDay();
-        const dim = new Date(calY,calM+1,0).getDate();
-        const dipm = new Date(calY,calM,0).getDate();
-        const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        document.getElementById('cal-title').textContent = `Calendar — ${MN[calM]} ${calY}`;
-        const grid = document.getElementById('cal-grid'); grid.innerHTML = '';
-        const local = getLocal();
-
-        for (let i=fd-1;i>=0;i--)
-          grid.innerHTML += `<div class="cal-date other"><span class="day-num">${dipm-i}</span></div>`;
-
-        for (let d=1;d<=dim;d++) {
-          const isTd = (d===today.getDate()&&calM===today.getMonth()&&calY===today.getFullYear());
-          const dow = (fd+d-1)%7, isWe = dow===0||dow===6;
-          const mm = String(calM+1).padStart(2,'0'), dd = String(d).padStart(2,'0');
-          const dk = `${calY}-${mm}-${dd}`;
-          const fests = getFests(calY,calM,d).map(f=>({...f,src:'fest'}));
-          const gcEvs = (gCache[dk]||[]);
-          const locEvs = (local[dk]||[]).map(e=>({...e,src:'local'}));
-          const all = [...fests,...gcEvs,...locEvs];
-          let cls = `cal-date curr${isTd?' today':''}${isWe?' wkend':''}${all.length?' has-ev':''}`;
-
-          let pills = '<div class="event-pills">';
-          all.slice(0,2).forEach(ev => {
-            let x = '';
-            if (ev.src==='local') x = `<span class="epill-del" onclick="event.stopPropagation();quickDel('${dk}','${encodeURIComponent(ev.name)}')">×</span>`;
-            else if (ev.src==='gcal') x = `<span class="epill-g" title="Google Calendar">G</span>`;
-            pills += `<div class="epill" style="background:${ev.color}22;color:${ev.color};border:1px solid ${ev.color}44"><span class="epill-name">${ev.name}</span>${x}</div>`;
-          });
-          if (all.length>2) pills += `<div class="epill-more">+${all.length-2} more</div>`;
-          pills += '</div>';
-
-          grid.innerHTML += `<div class="${cls}" onclick="openModal('${dk}',${d})">` +
-            `<span class="day-num">${d}</span>${pills}</div>`;
-        }
-
-        const rem = (fd+dim)%7===0?0:7-(fd+dim)%7;
-        for (let d=1;d<=rem;d++)
-          grid.innerHTML += `<div class="cal-date other"><span class="day-num">${d}</span></div>`;
-      }
-
-      function quickDel(dk,en) {
-        const n = decodeURIComponent(en), ev = getLocal();
-        if (ev[dk]) { ev[dk]=ev[dk].filter(e=>e.name!==n); if(!ev[dk].length) delete ev[dk]; }
-        saveLocal(ev); renderCal();
-      }
-
-      // ── MODAL ─────────────────────────────────
-      function openModal(dk,d) {
-        const MS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        document.getElementById('modal-date-label').textContent = `${d} ${MS[calM]} ${calY}`;
-        document.getElementById('modal-date-key').value = dk;
-        document.getElementById('modal-day-num').value = d;
-        document.getElementById('modal-ev-name').value = '';
-        document.getElementById('modal-gcal-info').style.display = gToken?'flex':'none';
-        buildModalList(dk,d);
-        document.getElementById('eventModal').style.display = 'flex';
-        setTimeout(()=>document.getElementById('modal-ev-name').focus(),80);
-      }
-
-      function buildModalList(dk,d) {
-        const local = getLocal();
-        const fests = getFests(calY,calM,d);
-        const gcEvs = gCache[dk]||[];
-        const locEvs = local[dk]||[];
-        let h = '';
-        fests.forEach(f => {
-          const sc = f.type==='national'?'src-nat':'src-fest';
-          const lb = f.type==='national'?'National':'Festival';
-          h += `<div class="modal-ev-item" style="border-left:3px solid ${f.color}">
-            <div class="modal-ev-dot" style="background:${f.color}"></div>
-            <span class="modal-ev-name">${f.name}</span>
-            <span class="modal-ev-src ${sc}">${lb}</span></div>`;
+        // ✅ FIX 2: Save full weather data including wind speed to backend
+        saveToBackend('weather', {
+          location:    'Delhi, India',
+          temperature: temp,
+          feelsLike:   feels,
+          humidity:    hum,
+          windSpeed:   wind,         // ← wind speed now included
+          condition:   wc.label,
+          weatherCode: c.weather_code,
+          fetchedAt:   new Date().toISOString()
         });
-        gcEvs.forEach(e => {
-          h += `<div class="modal-ev-item" style="border-left:3px solid ${e.color}">
-            <div class="modal-ev-dot" style="background:${e.color}"></div>
-            <span class="modal-ev-name">${e.name}</span>
-            <span class="modal-ev-src src-gcal"><i class="fa-brands fa-google"></i> Google</span>
-            <button class="modal-ev-del" onclick="delGCalModal('${e.gcalId}','${dk}',${d})">×</button>
-          </div>`;
-        });
-        locEvs.forEach(e => {
-          h += `<div class="modal-ev-item" style="border-left:3px solid ${e.color}">
-            <div class="modal-ev-dot" style="background:${e.color}"></div>
-            <span class="modal-ev-name">${e.name}</span>
-            <span class="modal-ev-src src-local">Custom</span>
-            <button class="modal-ev-del" onclick="delLocalModal('${dk}','${encodeURIComponent(e.name)}',${d})">×</button>
-          </div>`;
-        });
-        document.getElementById('modal-ev-list').innerHTML = h ||
-          '<p style="color:var(--text-muted);font-size:0.85rem;padding:8px 0">No events on this day</p>';
-      }
 
-      async function addModalEvent() {
-        const name = document.getElementById('modal-ev-name').value.trim();
-        const color = document.getElementById('modal-ev-color').value;
-        const dk = document.getElementById('modal-date-key').value;
-        const d = parseInt(document.getElementById('modal-day-num').value);
-        if (!name) { document.getElementById('modal-ev-name').focus(); return; }
-        saveToBackend('calendar-event', {
-  date: dk,
-  eventName: name,
-  color: color
-});
-
-        if (gToken) {
-          const gcalId = await pushToGCal(dk, name);
-          if (gcalId) {
-            if (!gCache[dk]) gCache[dk] = [];
-            gCache[dk].push({name,color,gcalId,src:'gcal'});
-          } else {
-            const ev = getLocal(); if (!ev[dk]) ev[dk] = [];
-            if (!ev[dk].find(e=>e.name===name)) { ev[dk].push({name,color,type:'custom'}); saveLocal(ev); }
-          }
-        } else {
-          const ev = getLocal(); if (!ev[dk]) ev[dk] = [];
-          if (!ev[dk].find(e=>e.name===name)) { ev[dk].push({name,color,type:'custom'}); saveLocal(ev); }
-        }
-        document.getElementById('modal-ev-name').value = '';
-        renderCal(); buildModalList(dk,d);
+      } catch (err) {
+        console.warn('Weather load failed:', err);
+        document.getElementById('w-desc').textContent = 'Unavailable';
+        document.getElementById('w-temp').textContent = '--°C';
       }
+    }
 
-      async function delGCalModal(gcalId,dk,d) { await deleteFromGCal(gcalId); renderCal(); buildModalList(dk,d); }
-      function delLocalModal(dk,en,d) {
-        const name = decodeURIComponent(en), ev = getLocal();
-        if (ev[dk]) { ev[dk]=ev[dk].filter(e=>e.name!==name); if(!ev[dk].length) delete ev[dk]; }
-        saveLocal(ev); renderCal(); buildModalList(dk,d);
-      }
-      function closeModal() { document.getElementById('eventModal').style.display = 'none'; }
-      document.getElementById('eventModal').addEventListener('click', e=>{if(e.target.id==='eventModal')closeModal();});
+    // ═══════════════════════════════════════════════════════════
+    // 🔔 FIX 3 — ALARM: Fixed AM/PM + Stop button + real audio
+    // ═══════════════════════════════════════════════════════════
+    let _alarmTimeout    = null;
+    let _alarmRingTimer  = null;
+    let _audioCtx        = null;
+    let _alarmIsSet      = false;
+    let _alarmIsRinging  = false;
 
-      async function navCal(dir) {
-        calM += dir;
-        if (calM<0){calM=11;calY--;} else if(calM>11){calM=0;calY++;}
-        renderCal(); if(gToken){await loadGCal();renderCal();}
+    // AM/PM toggle — properly reads current state and flips it
+    function toggleAmPm() {
+      const el = document.getElementById('alarmAmPm');
+      const current = el.textContent.trim().startsWith('A') ? 'AM' : 'PM';
+      const next = current === 'AM' ? 'PM' : 'AM';
+      const chevron = next === 'AM'
+        ? '<i class="fa-solid fa-chevron-up" style="font-size:0.75rem;margin-left:4px"></i>'
+        : '<i class="fa-solid fa-chevron-down" style="font-size:0.75rem;margin-left:4px"></i>';
+      el.innerHTML = `${next} ${chevron}`;
+    }
+
+    // Only allow digits, max 2 chars, max value
+    function enforceTimeInput(el, max) {
+      let v = el.textContent.replace(/\D/g, '');
+      if (v.length > 2) v = v.slice(-2);
+      const num = parseInt(v);
+      if (!isNaN(num) && num > max) v = String(max).padStart(2, '0');
+      // Only update if changed to avoid cursor jump
+      if (el.textContent !== v) {
+        el.textContent = v;
+        // Move cursor to end
+        const r = document.createRange(), s = window.getSelection();
+        r.selectNodeContents(el); r.collapse(false);
+        s.removeAllRanges(); s.addRange(r);
       }
-      document.getElementById('cal-prev').addEventListener('click',()=>navCal(-1));
-      document.getElementById('cal-next').addEventListener('click',()=>navCal(1));
-      document.getElementById('cal-today').addEventListener('click',async()=>{
-        calY=today.getFullYear();calM=today.getMonth();
-        renderCal(); if(gToken){await loadGCal();renderCal();}
+    }
+
+    // Pad to 2 digits on blur
+    function padBox(el, max) {
+      let v = parseInt(el.textContent.trim()) || 0;
+      if (v < 0) v = 0;
+      if (v > max) v = max;
+      // Hour box: min is 1
+      if (max === 12 && v === 0) v = 12;
+      el.textContent = String(v).padStart(2, '0');
+    }
+
+    // Tab/Enter moves focus between boxes
+    function handleTimeKey(e, el, nextId) {
+      if (e.key === 'Enter' || (e.key === 'Tab' && nextId)) {
+        e.preventDefault();
+        if (nextId) document.getElementById(nextId).focus();
+      }
+      // Block non-numeric except backspace/delete/arrows
+      if (!/^\d$/.test(e.key) && !['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Enter'].includes(e.key)) {
+        e.preventDefault();
+      }
+    }
+
+    function _setAlarmStatus(msg, dotClass) {
+      document.getElementById('alarmStatusText').textContent = msg;
+      const dot = document.getElementById('alarmDot');
+      dot.className = `alarm-status-dot${dotClass ? ' ' + dotClass : ''}`;
+    }
+
+    function setAlarm() {
+      if (_alarmIsRinging) { stopAlarm(); return; }
+
+      // Ensure padded values
+      padBox(document.getElementById('alarmHour'), 12);
+      padBox(document.getElementById('alarmMin'), 59);
+
+      const h  = document.getElementById('alarmHour').textContent.trim();
+      const m  = document.getElementById('alarmMin').textContent.trim();
+      const ap = document.getElementById('alarmAmPm').textContent.trim().startsWith('P') ? 'PM' : 'AM';
+
+      let hInt = parseInt(h);
+      const mInt = parseInt(m);
+
+      // Convert to 24h
+      if (ap === 'PM' && hInt !== 12) hInt += 12;
+      if (ap === 'AM' && hInt === 12) hInt = 0;
+
+      const now = new Date();
+      const alarmDate = new Date();
+      alarmDate.setHours(hInt, mInt, 0, 0);
+      // If time already passed today, set for tomorrow
+      if (alarmDate <= now) alarmDate.setDate(alarmDate.getDate() + 1);
+
+      const msLeft = alarmDate - now;
+      const totalMins = Math.round(msLeft / 60000);
+      const hrs = Math.floor(totalMins / 60);
+      const mins = totalMins % 60;
+      const inStr = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+
+      // Clear any previous alarm
+      if (_alarmTimeout) clearTimeout(_alarmTimeout);
+
+      _alarmTimeout = setTimeout(_ringAlarm, msLeft);
+      _alarmIsSet = true;
+
+      // Update UI
+      const btn = document.getElementById('btnSetAlarm');
+      btn.innerHTML = `<i class="fa-solid fa-check"></i> SET — ${h}:${m} ${ap}`;
+      btn.style.background = 'linear-gradient(90deg, #059669, #10b981)';
+      _setAlarmStatus(`⏰ Rings in ${inStr} (${h}:${m} ${ap})`, 'active');
+
+      // ✅ Save to backend with full info
+      saveToBackend('alarm', {
+        hour: h, minute: m, ampm: ap,
+        setAt: new Date().toISOString(),
+        msUntil: msLeft,
+        ringsAt: alarmDate.toISOString()
       });
+    }
 
+    function _ringAlarm() {
+      _alarmIsRinging = true;
+      _alarmIsSet = false;
+
+      const btn = document.getElementById('btnSetAlarm');
+      btn.innerHTML = `<i class="fa-solid fa-bell"></i> RINGING...`;
+      btn.classList.add('alarm-ringing');
+      document.getElementById('btnStopAlarm').style.display = 'flex';
+      _setAlarmStatus('🔔 ALARM RINGING! Tap STOP to dismiss', 'ringing');
+
+      // Web Audio beep
+      try {
+        _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let beep = 0;
+        _alarmRingTimer = setInterval(() => {
+          if (!_audioCtx) return;
+          const osc  = _audioCtx.createOscillator();
+          const gain = _audioCtx.createGain();
+          osc.connect(gain); gain.connect(_audioCtx.destination);
+          osc.type = beep % 2 === 0 ? 'square' : 'sawtooth';
+          osc.frequency.value = beep % 2 === 0 ? 880 : 660;
+          gain.gain.setValueAtTime(0.25, _audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, _audioCtx.currentTime + 0.35);
+          osc.start(_audioCtx.currentTime);
+          osc.stop(_audioCtx.currentTime + 0.35);
+          beep++;
+        }, 500);
+      } catch (e) {
+        console.warn('Web Audio not supported:', e);
+      }
+
+      // Auto-stop after 60 seconds if not dismissed
+      setTimeout(() => { if (_alarmIsRinging) stopAlarm(); }, 60000);
+    }
+
+    function stopAlarm() {
+      // Clear timers
+      if (_alarmTimeout)   { clearTimeout(_alarmTimeout);   _alarmTimeout = null; }
+      if (_alarmRingTimer) { clearInterval(_alarmRingTimer); _alarmRingTimer = null; }
+      if (_audioCtx)       { try { _audioCtx.close(); } catch(e){} _audioCtx = null; }
+
+      _alarmIsRinging = false;
+      _alarmIsSet = false;
+
+      const btn = document.getElementById('btnSetAlarm');
+      btn.classList.remove('alarm-ringing');
+      btn.innerHTML = `<i class="fa-regular fa-clock"></i> SET ALARM`;
+      btn.style.background = '';
+      document.getElementById('btnStopAlarm').style.display = 'none';
+      _setAlarmStatus('Alarm stopped', '');
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // 📅 FESTIVALS DB
+    // ═══════════════════════════════════════════════════════════
+    const F = {
+      '01-13': [{name:'Lohri 🔥',color:'#f97316',type:'festival'}],
+      '01-14': [{name:'Makar Sankranti 🪁',color:'#facc15',type:'festival'}],
+      '01-26': [{name:'Republic Day 🇮🇳',color:'#3b82f6',type:'national'}],
+      '04-14': [{name:'Ambedkar Jayanti',color:'#3b82f6',type:'national'}],
+      '08-15': [{name:'Independence Day 🇮🇳',color:'#22c55e',type:'national'}],
+      '10-02': [{name:'Gandhi Jayanti 🕊️',color:'#22c55e',type:'national'}],
+      '12-25': [{name:'Christmas 🎄',color:'#ef4444',type:'festival'}],
+      '01-01': [{name:'New Year 🎉',color:'#8b5cf6',type:'festival'}],
+      '2025-02-26': [{name:'Maha Shivratri 🕉️',color:'#8b5cf6',type:'festival'}],
+      '2025-03-14': [{name:'Holi 🎨',color:'#ec4899',type:'festival'}],
+      '2025-03-30': [{name:'Eid ul-Fitr 🌙',color:'#6366f1',type:'festival'}],
+      '2025-04-13': [{name:'Baisakhi 🌾',color:'#22c55e',type:'festival'}],
+      '2025-10-20': [{name:'Diwali 🪔',color:'#facc15',type:'festival'}],
+      '2026-02-17': [{name:'Maha Shivratri 🕉️',color:'#8b5cf6',type:'festival'}],
+      '2026-03-03': [{name:'Holi 🎨',color:'#ec4899',type:'festival'}],
+      '2026-03-21': [{name:'Eid ul-Fitr 🌙',color:'#6366f1',type:'festival'}],
+      '2026-04-03': [{name:'Good Friday ✝️',color:'#64748b',type:'festival'}],
+      '2026-04-13': [{name:'Baisakhi 🌾',color:'#22c55e',type:'festival'}],
+      '2026-05-22': [{name:'Buddha Purnima ☸️',color:'#f59e0b',type:'festival'}],
+      '2026-05-28': [{name:'Eid ul-Adha 🌙',color:'#6366f1',type:'festival'}],
+      '2026-08-20': [{name:'Janmashtami 🪈',color:'#8b5cf6',type:'festival'}],
+      '2026-09-08': [{name:'Ganesh Chaturthi 🐘',color:'#f97316',type:'festival'}],
+      '2026-10-16': [{name:'Dussehra 🏹',color:'#ef4444',type:'festival'}],
+      '2026-11-03': [{name:'Guru Nanak Jayanti ☬',color:'#22c55e',type:'festival'}],
+      '2026-11-04': [{name:'Diwali 🪔',color:'#facc15',type:'festival'}],
+      '2027-03-22': [{name:'Holi 🎨',color:'#ec4899',type:'festival'}],
+      '2027-10-19': [{name:'Diwali 🪔',color:'#facc15',type:'festival'}],
+    };
+    function getFests(y, mo, d) {
+      const mm = String(mo + 1).padStart(2,'0'), dd = String(d).padStart(2,'0');
+      return [...(F[`${y}-${mm}-${dd}`] || []), ...(F[`${mm}-${dd}`] || [])];
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // 💾 LOCAL EVENTS
+    // ═══════════════════════════════════════════════════════════
+    function getLocal() { try { return JSON.parse(localStorage.getItem('sd_events') || '{}'); } catch { return {}; } }
+    function saveLocal(e) { localStorage.setItem('sd_events', JSON.stringify(e)); }
+
+    // ═══════════════════════════════════════════════════════════
+    // 🔗 FIX 4 — GOOGLE CALENDAR: backend properly updated
+    // ═══════════════════════════════════════════════════════════
+    const GOOGLE_CLIENT_ID = '1030189405592-317rd184eqf01pt008kk95ah44falr1n.apps.googleusercontent.com';
+    const GCAL_SCOPE = 'https://www.googleapis.com/auth/calendar';
+    let gToken = null, gTokenClient = null, gCache = {};
+
+    function initGCal() {
+      if (!GOOGLE_CLIENT_ID) return;
+      try {
+        gTokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: GOOGLE_CLIENT_ID,
+          scope: GCAL_SCOPE,
+          callback: async r => {
+            if (r.error) { setGBtn('off'); return; }
+            gToken = r.access_token;
+            localStorage.setItem('gcal_on', '1');
+
+            // ✅ FIX 4a: Save connection event to backend
+            saveToBackend('google-calendar', {
+              status: 'connected',
+              connectedAt: new Date().toISOString()
+            });
+
+            setGBtn('on');
+            await loadGCal();
+            renderCal();
+            document.getElementById('modal-gcal-info').style.display = 'flex';
+          }
+        });
+        if (localStorage.getItem('gcal_on') === '1')
+          setTimeout(() => gTokenClient.requestAccessToken({ prompt: '' }), 1000);
+      } catch (e) { console.warn('GSI init fail', e); }
+    }
+
+    function setGBtn(s) {
+      const b = document.getElementById('gcal-btn'), t = document.getElementById('gcal-label');
+      b.className = 'btn-gcal';
+      if (s === 'on')   { b.classList.add('connected'); t.textContent = 'Google Synced'; }
+      else if (s === 'sync') { b.classList.add('syncing'); t.textContent = 'Syncing...'; }
+      else              { t.textContent = 'Connect Google'; }
+    }
+
+    async function handleGCalClick() {
+      if (!GOOGLE_CLIENT_ID) { alert('No Client ID set.'); return; }
+      if (gToken) { await syncGCalNow(); }
+      else if (gTokenClient) { gTokenClient.requestAccessToken(); }
+    }
+
+    async function syncGCalNow() {
+      if (!gToken) { alert('Connect Google Calendar first.'); return; }
+      setGBtn('sync');
+      await loadGCal();
       renderCal();
-      window.addEventListener('load',()=>{
-        if(typeof google!=='undefined') initGCal();
-        else { const s=document.querySelector('script[src*="gsi"]'); if(s) s.addEventListener('load',initGCal); }
-        refreshQuote();
-      });
+    }
 
-      // ── TO-DO ─────────────────────────────────
-      let tasks = JSON.parse(localStorage.getItem('sd_tasks')||'[]');
-      const saveTasks = () => localStorage.setItem('sd_tasks', JSON.stringify(tasks));
+    async function loadGCal() {
+      if (!gToken) return;
+      try {
+        const tMin = new Date(calY, calM - 1, 1).toISOString();
+        const tMax = new Date(calY, calM + 2, 0, 23, 59, 59).toISOString();
+        const r = await fetch(
+          `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${encodeURIComponent(tMin)}&timeMax=${encodeURIComponent(tMax)}&singleEvents=true&orderBy=startTime&maxResults=500`,
+          { headers: { Authorization: `Bearer ${gToken}` } }
+        );
+        if (r.status === 401) { gToken = null; setGBtn('off'); localStorage.removeItem('gcal_on'); return; }
 
-      function renderTasks() {
-        const L = document.getElementById('taskList');
-        if (!tasks.length) { L.innerHTML='<li style="color:var(--text-muted);font-size:0.85rem;text-align:center;padding:20px 0">No tasks yet!</li>'; return; }
-        L.innerHTML = tasks.map((t,i)=>`<li class="task-item ${t.done?'done':''}">
-          <div class="task-left" onclick="toggleTask(${i})"><div class="check-box"></div><span class="task-text">${t.text}</span></div>
-          <div style="display:flex;align-items:center;gap:10px"><span class="task-time">${t.time}</span><button class="task-del" onclick="deleteTask(${i})"><i class="fa-solid fa-trash"></i></button></div>
-        </li>`).join('');
-      }
+        const d = await r.json();
+        gCache = {};
+        const gc = {'1':'#7986cb','2':'#33b679','3':'#8e24aa','4':'#e67c73','5':'#f6bf26','6':'#f4511e','7':'#039be5','8':'#616161','9':'#3f51b5','10':'#0b8043','11':'#d50000'};
 
-      function addTask() {
-        const inp = document.getElementById('taskInput'), text = inp.value.trim();
-        if (!text) return;
-        const n = new Date(); let h=n.getHours(), m=n.getMinutes(); const ap=h>=12?'PM':'AM'; h=h%12||12;
-        tasks.unshift({text,done:false,time:`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${ap}`});
-        saveToBackend('task', {
-  task: text
-});
-        inp.value=''; saveTasks(); renderTasks();
-      }
-      function toggleTask(i){tasks[i].done=!tasks[i].done;saveTasks();renderTasks();}
-      function deleteTask(i){tasks.splice(i,1);saveTasks();renderTasks();}
-      document.getElementById('taskInput').addEventListener('keydown',e=>{if(e.key==='Enter')addTask();});
-      document.getElementById('clearCompleted').addEventListener('click',()=>{tasks=tasks.filter(t=>!t.done);saveTasks();renderTasks();});
-      renderTasks();
+        (d.items || []).forEach(it => {
+          const dk = (it.start.date || it.start.dateTime || '').substring(0, 10);
+          if (!dk) return;
+          if (!gCache[dk]) gCache[dk] = [];
+          gCache[dk].push({ name: it.summary || '(No title)', color: gc[it.colorId] || '#4285f4', gcalId: it.id, src: 'gcal' });
+        });
 
-      // ── ALARM ─────────────────────────────────
-      document.getElementById('alarmAmPm').addEventListener('click',function(){
-        const c = this.textContent.includes('PM');
-        this.innerHTML=`${c?'AM':'PM'} <i class="fa-solid fa-chevron-down" style="font-size:0.8rem;margin-left:5px"></i>`;
-      });
-      document.querySelector('.btn-alarm').addEventListener('click',()=>{
-        const h = document.getElementById('alarmHour').textContent.trim();
-        const m = document.getElementById('alarmMin').textContent.trim();
-        const ap = document.getElementById('alarmAmPm').textContent.includes('PM')?'PM':'AM';
-        saveToBackend('alarm', {
-  hour: h,
-  minute: m,
-  ampm: ap
-});
-        alert(`⏰ Alarm set for ${h}:${m} ${ap}`);
-      });
+        setGBtn('on');
 
-      // ── MESSAGES (bubble style) ────────────────
-      function getTime(){
-        const n=new Date(); let h=n.getHours(), m=n.getMinutes();
-        const ap=h>=12?'PM':'AM'; h=h%12||12;
-        return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${ap}`;
-      }
+        // ✅ FIX 4b: Save ALL synced events to backend
+        const allEvents = [];
+        Object.entries(gCache).forEach(([date, evs]) => {
+          evs.forEach(ev => allEvents.push({
+            date,
+            name: ev.name,
+            color: ev.color,
+            gcalId: ev.gcalId
+          }));
+        });
 
-      function addBubble(text, who) {
-        const list = document.getElementById('msgList');
-        const placeholder = list.querySelector('p');
-        if (placeholder) placeholder.remove();
-        const t = getTime();
-        const row = document.createElement('div');
-        row.className = `bubble-row ${who}`;
-        if (who==='you') {
-          row.innerHTML = `<div class="bubble-meta">${t}</div><div class="you-bubble">${text}</div>`;
-        } else {
-          row.innerHTML = `<div class="bubble-meta"><div class="desk-dot-sm">D</div> Desk · ${t}</div><div class="desk-bubble">${text}</div>`;
+        if (allEvents.length > 0) {
+          saveToBackend('google-calendar-sync', {
+            syncedAt:    new Date().toISOString(),
+            totalEvents: allEvents.length,
+            monthRange:  `${calY}-${String(calM + 1).padStart(2,'0')}`,
+            events:      allEvents   // ← all events sent to backend
+          });
         }
-        list.appendChild(row);
-        list.scrollTop = list.scrollHeight;
+
+      } catch (e) {
+        console.error('GCal load error:', e);
+        setGBtn('on');
+      }
+    }
+
+    async function pushToGCal(dateKey, name) {
+      if (!gToken) return null;
+      try {
+        const r = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${gToken}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ summary: name, start: { date: dateKey }, end: { date: dateKey } })
+        });
+        if (!r.ok) return null;
+        return (await r.json()).id;
+      } catch { return null; }
+    }
+
+    async function deleteFromGCal(gcalId) {
+      if (!gToken || !gcalId) return;
+      try {
+        await fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${gcalId}`, {
+          method: 'DELETE',
+          headers: { Authorization: `Bearer ${gToken}` }
+        });
+        Object.keys(gCache).forEach(k => { gCache[k] = gCache[k].filter(e => e.gcalId !== gcalId); });
+
+        // ✅ FIX 4c: Save deletion event to backend
+        saveToBackend('google-calendar-delete', {
+          gcalId,
+          deletedAt: new Date().toISOString()
+        });
+      } catch (e) { console.warn('GCal delete fail:', e); }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // 📅 CALENDAR RENDER
+    // ═══════════════════════════════════════════════════════════
+    const today = new Date();
+    let calY = today.getFullYear(), calM = today.getMonth();
+
+    function renderCal() {
+      const fd  = new Date(calY, calM, 1).getDay();
+      const dim = new Date(calY, calM + 1, 0).getDate();
+      const dipm = new Date(calY, calM, 0).getDate();
+      const MN  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      document.getElementById('cal-title').textContent = `Calendar — ${MN[calM]} ${calY}`;
+
+      const grid = document.getElementById('cal-grid');
+      grid.innerHTML = '';
+      const local = getLocal();
+
+      // Prev-month filler
+      for (let i = fd - 1; i >= 0; i--)
+        grid.innerHTML += `<div class="cal-date other"><span class="day-num">${dipm - i}</span></div>`;
+
+      // Current month days
+      for (let d = 1; d <= dim; d++) {
+        const isTd = (d === today.getDate() && calM === today.getMonth() && calY === today.getFullYear());
+        const dow  = (fd + d - 1) % 7, isWe = dow === 0 || dow === 6;
+        const mm   = String(calM + 1).padStart(2,'0'), dd = String(d).padStart(2,'0');
+        const dk   = `${calY}-${mm}-${dd}`;
+        const fests  = getFests(calY, calM, d).map(f => ({ ...f, src: 'fest' }));
+        const gcEvs  = gCache[dk] || [];
+        const locEvs = (local[dk] || []).map(e => ({ ...e, src: 'local' }));
+        const all    = [...fests, ...gcEvs, ...locEvs];
+        const cls    = `cal-date curr${isTd?' today':''}${isWe?' wkend':''}`;
+
+        let pills = '<div class="event-pills">';
+        all.slice(0, 2).forEach(ev => {
+          let x = '';
+          if (ev.src === 'local')
+            x = `<span class="epill-del" onclick="event.stopPropagation();quickDel('${dk}','${encodeURIComponent(ev.name)}')">×</span>`;
+          else if (ev.src === 'gcal')
+            x = `<span class="epill-g" title="Google Calendar">G</span>`;
+          pills += `<div class="epill" style="background:${ev.color}22;color:${ev.color};border:1px solid ${ev.color}44">
+            <span class="epill-name">${ev.name}</span>${x}</div>`;
+        });
+        if (all.length > 2) pills += `<div class="epill-more">+${all.length - 2} more</div>`;
+        pills += '</div>';
+
+        grid.innerHTML += `<div class="${cls}" onclick="openModal('${dk}',${d})">
+          <span class="day-num">${d}</span>${pills}</div>`;
       }
 
-      async function sendDeskMsg() {
-  const inp = document.getElementById('deskInput');
-  const text = inp.value.trim();
+      // Next-month filler
+      const rem = (fd + dim) % 7 === 0 ? 0 : 7 - (fd + dim) % 7;
+      for (let d = 1; d <= rem; d++)
+        grid.innerHTML += `<div class="cal-date other"><span class="day-num">${d}</span></div>`;
+    }
 
-  if (!text) return;
+    function quickDel(dk, en) {
+      const n = decodeURIComponent(en), ev = getLocal();
+      if (ev[dk]) { ev[dk] = ev[dk].filter(e => e.name !== n); if (!ev[dk].length) delete ev[dk]; }
+      saveLocal(ev); renderCal();
+    }
 
-  // frontend pe show
-  addBubble(text, 'you');
+    // ── MODAL ──────────────────────────────────────────────────
+    function openModal(dk, d) {
+      const MS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      document.getElementById('modal-date-label').textContent = `${d} ${MS[calM]} ${calY}`;
+      document.getElementById('modal-date-key').value = dk;
+      document.getElementById('modal-day-num').value  = d;
+      document.getElementById('modal-ev-name').value  = '';
+      document.getElementById('modal-gcal-info').style.display = gToken ? 'flex' : 'none';
+      buildModalList(dk, d);
+      document.getElementById('eventModal').style.display = 'flex';
+      setTimeout(() => document.getElementById('modal-ev-name').focus(), 80);
+    }
 
-  const now = new Date();
+    function buildModalList(dk, d) {
+      const local  = getLocal();
+      const fests  = getFests(calY, calM, d);
+      const gcEvs  = gCache[dk] || [];
+      const locEvs = local[dk]  || [];
+      let h = '';
 
-  const time =
-    now.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+      fests.forEach(f => {
+        const sc = f.type === 'national' ? 'src-nat' : 'src-fest';
+        const lb = f.type === 'national' ? 'National' : 'Festival';
+        h += `<div class="modal-ev-item" style="border-left:3px solid ${f.color}">
+          <div class="modal-ev-dot" style="background:${f.color}"></div>
+          <span class="modal-ev-name">${f.name}</span>
+          <span class="modal-ev-src ${sc}">${lb}</span></div>`;
+      });
 
-  try {
+      gcEvs.forEach(e => {
+        h += `<div class="modal-ev-item" style="border-left:3px solid ${e.color}">
+          <div class="modal-ev-dot" style="background:${e.color}"></div>
+          <span class="modal-ev-name">${e.name}</span>
+          <span class="modal-ev-src src-gcal"><i class="fa-brands fa-google"></i> Google</span>
+          <button class="modal-ev-del" onclick="delGCalModal('${e.gcalId}','${dk}',${d})">×</button></div>`;
+      });
 
-    // backend pe exact backend format me bhejo
-    const response = await fetch('https://smartdesk-backend-lovat.vercel.app/api/data', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      locEvs.forEach(e => {
+        h += `<div class="modal-ev-item" style="border-left:3px solid ${e.color}">
+          <div class="modal-ev-dot" style="background:${e.color}"></div>
+          <span class="modal-ev-name">${e.name}</span>
+          <span class="modal-ev-src src-local">Custom</span>
+          <button class="modal-ev-del" onclick="delLocalModal('${dk}','${encodeURIComponent(e.name)}',${d})">×</button></div>`;
+      });
 
-      body: JSON.stringify({
-        deskMessages: [
-          {
-            time: time,
-            text: text
-          }
-        ]
-      })
-    });
+      document.getElementById('modal-ev-list').innerHTML = h ||
+        '<p style="color:var(--text-muted);font-size:0.85rem;padding:8px 0">No events on this day</p>';
+    }
 
-    const result = await response.json();
+    async function addModalEvent() {
+      const name  = document.getElementById('modal-ev-name').value.trim();
+      const color = document.getElementById('modal-ev-color').value;
+      const dk    = document.getElementById('modal-date-key').value;
+      const d     = parseInt(document.getElementById('modal-day-num').value);
+      if (!name) { document.getElementById('modal-ev-name').focus(); return; }
 
-    console.log('Message Saved:', result);
-
-    setTimeout(() => {
-      addBubble('✓ Message saved to database', 'desk');
-    }, 400);
-
-  } catch (error) {
-
-    console.error(error);
-
-    addBubble('❌ Failed to save message', 'desk');
-  }
-
-  inp.value = '';
-}
-      // ── MISC ──────────────────────────────────
-      function toggleDark(){document.body.style.filter=document.body.style.filter==='invert(1)'?'':'invert(1)';}
-      function showHelp(){
-        alert('Smart Desk Help\n\n🔗 Google Calendar Sync\n  → Click "Connect Google" in the calendar\n  → Allow permissions in the Google popup\n  → Your events appear instantly\n\n📅 Calendar\n  → Click any date to view/add/delete events\n  → Indian festivals auto-shown (2025–2027)\n\n✅ Tasks, ⏰ Alarm, 📨 Messages work as usual');
+      let gcalId = null;
+      if (gToken) {
+        gcalId = await pushToGCal(dk, name);
+        if (gcalId) {
+          if (!gCache[dk]) gCache[dk] = [];
+          gCache[dk].push({ name, color, gcalId, src: 'gcal' });
+        } else {
+          const ev = getLocal();
+          if (!ev[dk]) ev[dk] = [];
+          if (!ev[dk].find(e => e.name === name)) { ev[dk].push({ name, color, type: 'custom' }); saveLocal(ev); }
+        }
+      } else {
+        const ev = getLocal();
+        if (!ev[dk]) ev[dk] = [];
+        if (!ev[dk].find(e => e.name === name)) { ev[dk].push({ name, color, type: 'custom' }); saveLocal(ev); }
       }
+
+      // ✅ FIX 4d: Save new event with full context to backend
+      saveToBackend('calendar-event', {
+        date:      dk,
+        eventName: name,
+        color:     color,
+        source:    gcalId ? 'google-calendar' : 'local',
+        gcalId:    gcalId || null,
+        createdAt: new Date().toISOString()
+      });
+
+      document.getElementById('modal-ev-name').value = '';
+      renderCal();
+      buildModalList(dk, d);
+    }
+
+    async function delGCalModal(gcalId, dk, d) { await deleteFromGCal(gcalId); renderCal(); buildModalList(dk, d); }
+    function delLocalModal(dk, en, d) {
+      const name = decodeURIComponent(en), ev = getLocal();
+      if (ev[dk]) { ev[dk] = ev[dk].filter(e => e.name !== name); if (!ev[dk].length) delete ev[dk]; }
+      saveLocal(ev); renderCal(); buildModalList(dk, d);
+    }
+    function closeModal() { document.getElementById('eventModal').style.display = 'none'; }
+    document.getElementById('eventModal').addEventListener('click', e => { if (e.target.id === 'eventModal') closeModal(); });
+
+    async function navCal(dir) {
+      calM += dir;
+      if (calM < 0) { calM = 11; calY--; } else if (calM > 11) { calM = 0; calY++; }
+      renderCal();
+      if (gToken) { await loadGCal(); renderCal(); }
+    }
+    document.getElementById('cal-prev').addEventListener('click', () => navCal(-1));
+    document.getElementById('cal-next').addEventListener('click', () => navCal(1));
+    document.getElementById('cal-today').addEventListener('click', async () => {
+      calY = today.getFullYear(); calM = today.getMonth();
+      renderCal();
+      if (gToken) { await loadGCal(); renderCal(); }
+    });
+
+    // ═══════════════════════════════════════════════════════════
+    // ✅ TO-DO
+    // ═══════════════════════════════════════════════════════════
+    let tasks = JSON.parse(localStorage.getItem('sd_tasks') || '[]');
+    const saveTasks = () => localStorage.setItem('sd_tasks', JSON.stringify(tasks));
+
+    function renderTasks() {
+      const L = document.getElementById('taskList');
+      if (!tasks.length) {
+        L.innerHTML = '<li style="color:var(--text-muted);font-size:0.85rem;text-align:center;padding:20px 0">No tasks yet!</li>';
+        return;
+      }
+      L.innerHTML = tasks.map((t, i) => `<li class="task-item ${t.done ? 'done' : ''}">
+        <div class="task-left" onclick="toggleTask(${i})">
+          <div class="check-box"></div>
+          <span class="task-text">${t.text}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="task-time">${t.time}</span>
+          <button class="task-del" onclick="deleteTask(${i})"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </li>`).join('');
+    }
+
+    function addTask() {
+      const inp = document.getElementById('taskInput'), text = inp.value.trim();
+      if (!text) return;
+      const n = new Date(); let h = n.getHours(), m = n.getMinutes();
+      const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+      tasks.unshift({ text, done: false, time: `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${ap}` });
+      inp.value = '';
+      saveTasks(); renderTasks();
+      saveToBackend('task', { task: text, addedAt: new Date().toISOString() });
+    }
+    function toggleTask(i) { tasks[i].done = !tasks[i].done; saveTasks(); renderTasks(); }
+    function deleteTask(i) { tasks.splice(i, 1); saveTasks(); renderTasks(); }
+    document.getElementById('taskInput').addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
+    document.getElementById('clearCompleted').addEventListener('click', () => { tasks = tasks.filter(t => !t.done); saveTasks(); renderTasks(); });
+    renderTasks();
+
+    // ═══════════════════════════════════════════════════════════
+    // 💬 MESSAGES (bubble style)
+    // ═══════════════════════════════════════════════════════════
+    function getTime() {
+      const n = new Date(); let h = n.getHours(), m = n.getMinutes();
+      const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${ap}`;
+    }
+
+    function addBubble(text, who) {
+      const list = document.getElementById('msgList');
+      const placeholder = list.querySelector('p');
+      if (placeholder) placeholder.remove();
+      const t = getTime();
+      const row = document.createElement('div');
+      row.className = `bubble-row ${who}`;
+      if (who === 'you') {
+        row.innerHTML = `<div class="bubble-meta">${t}</div><div class="you-bubble">${text}</div>`;
+      } else {
+        row.innerHTML = `<div class="bubble-meta"><div class="desk-dot-sm">D</div> Desk · ${t}</div><div class="desk-bubble">${text}</div>`;
+      }
+      list.appendChild(row);
+      list.scrollTop = list.scrollHeight;
+    }
+
+    async function sendDeskMsg() {
+      const inp  = document.getElementById('deskInput');
+      const text = inp.value.trim();
+      if (!text) return;
+
+      addBubble(text, 'you');
+      inp.value = '';
+
+      const now  = new Date();
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      try {
+        const res = await fetch('https://smartdesk-backend-lovat.vercel.app/api/data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ deskMessages: [{ time, text }] })
+        });
+        const result = await res.json();
+        console.log('Message saved:', result);
+        setTimeout(() => addBubble('✓ Message saved to database', 'desk'), 400);
+      } catch (err) {
+        console.error(err);
+        setTimeout(() => addBubble('❌ Failed to save message', 'desk'), 400);
+      }
+    }
+
+    document.getElementById('clearMessages').addEventListener('click', () => {
+      document.getElementById('msgList').innerHTML =
+        '<p style="color:var(--text-muted);font-size:0.82rem;text-align:center;padding:20px 0">No messages yet</p>';
+    });
+
+    // ═══════════════════════════════════════════════════════════
+    // ⚡ MISC
+    // ═══════════════════════════════════════════════════════════
+    function toggleDark() {
+      document.body.style.filter = document.body.style.filter === 'invert(1)' ? '' : 'invert(1)';
+    }
+    function showHelp() {
+      alert('Smart Desk Help\n\n🔗 Google Calendar Sync\n  → Click "Connect Google" in the calendar\n  → Allow permissions in the Google popup\n  → Your events appear instantly & sync to backend\n\n📅 Calendar\n  → Click any date to view/add/delete events\n  → Indian festivals auto-shown (2025–2027)\n\n⏰ Alarm\n  → Edit hour & minute boxes directly\n  → Click AM/PM to toggle\n  → Press SET ALARM — a STOP button appears\n\n🌤️ Weather auto-loads from Open-Meteo API');
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // 🚀 PAGE LOAD — fire everything
+    // ═══════════════════════════════════════════════════════════
+    window.addEventListener('load', () => {
+      // Quotes: fetch pool then show first random quote
+      _fetchQuotePool().then(() => refreshQuote());
+
+      // Weather: live data from Open-Meteo
+      loadWeather();
+
+      // Google Calendar
+      if (typeof google !== 'undefined') initGCal();
+      else {
+        const s = document.querySelector('script[src*="gsi"]');
+        if (s) s.addEventListener('load', initGCal);
+      }
+
+      // Calendar grid
+      renderCal();
+    });
     </script>
   </body>
 </html>
