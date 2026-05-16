@@ -1165,14 +1165,20 @@
       }
 
       // ✅ FIX 4d: Save new event with full context to backend
-      saveToBackend('calendar-event', {
-        date:      dk,
-        eventName: name,
-        color:     color,
-        source:    gcalId ? 'google-calendar' : 'local',
-        gcalId:    gcalId || null,
-        createdAt: new Date().toISOString()
-      });
+      await fetch('https://smartdesk-backend-lovat.vercel.app/api/data', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    calendarEvents: [
+      {
+        date: dk,
+        events: [name]
+      }
+    ]
+  })
+});
 
       document.getElementById('modal-ev-name').value = '';
       renderCal();
