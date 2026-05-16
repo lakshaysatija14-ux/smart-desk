@@ -43,8 +43,8 @@ function syncCalendar() {
             document.querySelectorAll('.cal-date.has-event')
         ).map(cell => {
 
-            // ✅ Get date safely
-            const dateText = cell.firstChild.textContent.trim();
+            // ✅ Extract only numeric date
+            const dateText = cell.childNodes[0].nodeValue.trim();
 
             const tags = Array.from(
                 cell.querySelectorAll('.event-tag')
