@@ -36,13 +36,32 @@ function syncMessages() {
 }
 
 function syncCalendar() {
+
     setTimeout(() => {
-        const events = Array.from(document.querySelectorAll('.cal-date.has-event')).map(cell => {
-            const dateNum = cell.childNodes[0] ? cell.childNodes[0].textContent.trim() : cell.textContent.trim();
-            const tags = Array.from(cell.querySelectorAll('.event-tag')).map(t => t.innerText);
-            return { date: parseInt(dateNum), events: tags };
+
+        const events = Array.from(
+            document.querySelectorAll('.cal-date.has-event')
+        ).map(cell => {
+
+            // ✅ Get date safely
+            const dateText = cell.firstChild.textContent.trim();
+
+            const tags = Array.from(
+                cell.querySelectorAll('.event-tag')
+            ).map(t => t.innerText);
+
+            return {
+                date: Number(dateText),
+                events: tags
+            };
         });
-        syncWithHardware({ calendarEvents: events });
+
+        console.log(events);
+
+        syncWithHardware({
+            calendarEvents: events
+        });
+
     }, 50);
 }
 
