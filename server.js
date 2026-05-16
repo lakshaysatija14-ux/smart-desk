@@ -197,6 +197,10 @@ function sendDeskMessage() {
                     temp: Math.round(data.main.temp),
                     condition: desc.charAt(0).toUpperCase() + desc.slice(1),
                     humidity: data.main.humidity,
+            
+                    // ✅ ADD THIS
+                    windSpeed: Math.round(data.wind.speed * 3.6),
+            
                     city: data.name
                 }
             });
