@@ -43,23 +43,18 @@ function syncCalendar() {
             document.querySelectorAll('.cal-date.has-event')
         ).map(cell => {
 
-            // ✅ Clone karke event tags hata do, sirf date number lo
-            const clone = cell.cloneNode(true);
-            clone.querySelectorAll('.event-tag').forEach(el => el.remove());
-            const dateNum = parseInt(clone.textContent.trim());
-
-            if (isNaN(dateNum)) return null; // invalid cell skip
+            // ✅ Extract only numeric date
+            const dateText = cell.childNodes[0].nodeValue.trim();
 
             const tags = Array.from(
                 cell.querySelectorAll('.event-tag')
-            ).map(t => t.innerText.trim());
+            ).map(t => t.innerText);
 
             return {
-                date: dateNum,
+                date: Number(dateText),
                 events: tags
             };
-
-        }).filter(Boolean); // ✅ null wale entries hata do
+        });
 
         console.log(events);
 
