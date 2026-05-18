@@ -377,7 +377,7 @@
             <div class="t-box" id="alarmHour" contenteditable="true"
                  oninput="enforceTimeInput(this,12)"
                  onblur="padBox(this,12)"
-                 onkeydown="handleTimeKey(event,this,'alarmMin')">12</div>
+                 onkeydown="handleTimeKey(event,this,'alarmMin')">00</div>
             <span style="font-size: 1.5rem; font-weight: bold; color: var(--text-muted)">:</span>
             <div class="t-box" id="alarmMin" contenteditable="true"
                  oninput="enforceTimeInput(this,59)"
@@ -730,7 +730,7 @@
       if (v < 0) v = 0;
       if (v > max) v = max;
       // Hour box: min is 1
-      if (max === 12 && v === 0) v = 12;
+      //if (max === 12 && v === 0) v = 12;
       el.textContent = String(v).padStart(2, '0');
     }
 
