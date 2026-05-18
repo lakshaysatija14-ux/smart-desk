@@ -397,6 +397,11 @@
           <button class="btn-stop-alarm" id="btnStopAlarm" onclick="stopAlarm()">
             <i class="fa-solid fa-stop"></i> STOP ALARM
           </button>
+          <button class="btn-stop-alarm" id="btnCancelAlarm"
+  onclick="cancelAlarm()"
+  style="display:none; margin-top:8px">
+  <i class="fa-solid fa-xmark"></i> CANCEL ALARM
+</button>
         </div>
 
       </div><!-- /row-1 -->
@@ -788,6 +793,7 @@
       btn.innerHTML = `<i class="fa-solid fa-check"></i> SET — ${h}:${m} ${ap}`;
       btn.style.background = 'linear-gradient(90deg, #059669, #10b981)';
       _setAlarmStatus(`⏰ Rings in ${inStr} (${h}:${m} ${ap})`, 'active');
+      document.getElementById('btnCancelAlarm').style.display = 'flex';
 
       // ✅ Save to backend with full info
       saveToBackend('alarm', {
@@ -847,8 +853,21 @@
       btn.innerHTML = `<i class="fa-regular fa-clock"></i> SET ALARM`;
       btn.style.background = '';
       document.getElementById('btnStopAlarm').style.display = 'none';
+      document.getElementById('btnCancelAlarm').style.display = 'none';
       _setAlarmStatus('Alarm stopped', '');
     }
+      function cancelAlarm() {
+  if (_alarmTimeout) {
+    clearTimeout(_alarmTimeout);
+    _alarmTimeout = null;
+  }
+  _alarmIsSet = false;
+  const btn = document.getElementById('btnSetAlarm');
+  btn.innerHTML = `<i class="fa-regular fa-clock"></i> SET ALARM`;
+  btn.style.background = '';
+  document.getElementById('btnCancelAlarm').style.display = 'none';
+  _setAlarmStatus('Alarm cancelled', '');
+}
 
     // ═══════════════════════════════════════════════════════════
     // 📅 FESTIVALS DB
