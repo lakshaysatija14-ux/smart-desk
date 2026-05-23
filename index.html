@@ -1184,7 +1184,7 @@
       }
 
       // ✅ FIX 4d: Save new event with full context to backend
-      await fetch('https://smartdesk-backend-lovat.vercel.app/api/data', {
+      await fetch('https://smartdesk-backend-lakshaysatija14-5103s-projects.vercel.app/api/data', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -1304,7 +1304,7 @@
       const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       try {
-        const res = await fetch('https://smartdesk-backend-lovat.vercel.app/api/data', {
+        const res = await fetch('https://smartdesk-backend-lakshaysatija14-5103s-projects.vercel.app/api/data', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ deskMessages: [{ time, text }] })
