@@ -127,7 +127,6 @@ function sendDeskMessage() {
     msgList.appendChild(createMsgItem(text, time));
     msgList.scrollTop = msgList.scrollHeight;
     sendInput.value = '';
-    syncMessages();
 }
 
     sendBtn.addEventListener('click', sendDeskMessage);
