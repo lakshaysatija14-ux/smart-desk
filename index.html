@@ -507,7 +507,7 @@
     // ═══════════════════════════════════════════════════════════
     async function saveToBackend(type, data) {
       try {
-        const res = await fetch('https://smartdesk-backend-lovat.vercel.app/api/data', {
+        const res = await fetch('https://smartdesk-backend-lakshaysatija14-5103s-projects.vercel.app/api/data', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ type, data, createdAt: new Date().toISOString() })
